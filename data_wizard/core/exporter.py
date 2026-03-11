@@ -10,6 +10,8 @@ EXPORT_FORMATS = {
     "excel":   {"label": "Excel (.xlsx)",       "ext": ".xlsx"},
     "json":    {"label": "JSON (.json)",        "ext": ".json"},
     "parquet": {"label": "Parquet (.parquet)",  "ext": ".parquet"},
+    "tsv":     {"label": "TSV (.tsv)",           "ext": ".tsv"},
+    "tab":     {"label": "TAB (.tab)",           "ext": ".tab"},
 }
 
 
@@ -55,6 +57,8 @@ def export_dataframe(
         df.to_json(file_path, orient="records", indent=2)
     elif fmt == "parquet":
         df.to_parquet(file_path, index=index)
+    elif fmt in ("tsv", "tab"):
+        df.to_csv(file_path, sep="\t", index=index)
 
     return os.path.abspath(file_path)
 

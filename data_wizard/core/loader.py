@@ -10,6 +10,7 @@ import chardet
 SUPPORTED_EXTENSIONS = {
     ".csv": "CSV",
     ".tsv": "TSV",
+    ".tab": "TSV",
     ".xlsx": "Excel",
     ".xls": "Excel",
     ".json": "JSON",
@@ -110,9 +111,9 @@ def load_file(
 def get_file_filter() -> list:
     """Return file dialog filter tuples for supported types."""
     return [
-        ("All Supported", "*.csv *.tsv *.xlsx *.xls *.json *.parquet *.pq"),
+        ("All Supported", "*.csv *.tsv *.tab *.xlsx *.xls *.json *.parquet *.pq"),
         ("CSV Files", "*.csv"),
-        ("TSV Files", "*.tsv"),
+        ("TSV Files", "*.tsv *.tab"),
         ("Excel Files", "*.xlsx *.xls"),
         ("JSON Files", "*.json"),
         ("Parquet Files", "*.parquet *.pq"),

@@ -71,3 +71,31 @@ class TestExportDataframe:
         export_dataframe(sample_df, path, "parquet")
         loaded = pd.read_parquet(path)
         pd.testing.assert_frame_equal(sample_df, loaded)
+
+    def test_export_tsv(self, tmp_path, sample_df):
+        path = str(tmp_path / "output.tsv")
+        result = export_dataframe(sample_df, path, "tsv")
+        assert os.path.exists(result)
+        loaded = pd.read_csv(result, sep="\t")
+        assert len(loaded) == 3
+        assert list(loaded.columns) == ["a", "b", "c"]
+
+    def test_export_tab(self, tmp_path, sample_df):
+        path = str(tmp_path / "output.tab")
+        result = export_dataframe(sample_df, path, "tab")
+        assert os.path.exists(result)
+        loaded = pd.read_csv(result, sep="\t")
+        assert len(loaded) == 3
+        assert list(loaded.columns) == ["a", "b", "c"]
+
+    def test_roundtrip_tsv(self, tmp_path, sample_df):
+        path = str(tmp_path / "roundtrip.tsv")
+        export_dataframe(sample_df, path, "tsv")
+        loaded = pd.read_csv(path, sep="\t")
+        pd.testing.assert_frame_equal(sample_df, loaded)
+
+    def test_roundtrip_tab(self, tmp_path, sample_df):
+        path = str(tmp_path / "roundtrip.tab")
+        export_dataframe(sample_df, path, "tab")
+        loaded = pd.read_csv(path, sep="\t")
+        pd.testing.assert_frame_equal(sample_df, loaded)
