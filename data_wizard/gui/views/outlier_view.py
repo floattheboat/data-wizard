@@ -240,7 +240,7 @@ class OutlierView(ctk.CTkFrame):
             new_df = apply_remediations_bulk(self._store.df, remediations)
             self._store.df = new_df
 
-            details = {col: cfg["strategy"] for col, cfg in remediations.items()}
+            details = {col: cfg for col, cfg in remediations.items()}
             self._store.log_operation("outlier_remediation", details)
 
             self._status_label.configure(

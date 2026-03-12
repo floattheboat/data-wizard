@@ -3,6 +3,8 @@
 import pandas as pd
 from typing import Optional, List, Dict, Any
 
+from data_wizard.core.audit_logger import AuditLogger
+
 
 class DataStore:
     """Singleton-style central data store for the application.
@@ -29,6 +31,7 @@ class DataStore:
         self.operations: List[Dict[str, Any]] = []
         self.source_info: Dict[str, Any] = {}
         self._max_undo = 10
+        self.audit = AuditLogger()
         # Callbacks for observers
         self._on_change_callbacks = []
 
@@ -50,6 +53,8 @@ class DataStore:
         self._undo_stack.clear()
         self.operations.clear()
         self.source_info = source_info or {}
+        self.audit.clear()
+        self.audit.record_load(df, self.source_info)
         self._notify()
 
     @property
@@ -74,8 +79,8 @@ class DataStore:
         if not self._undo_stack:
             return False
         self.df = self._undo_stack.pop()
-        if self.operations:
-            self.operations.pop()
+        undone = self.operations.pop() if self.operations else None
+        self.audit.record_undo(undone.get("operation") if undone else None)
         self._notify()
         return True
 
@@ -85,6 +90,11 @@ class DataStore:
 
     def log_operation(self, operation: str, details: Dict[str, Any]):
         """Log an operation for the cleaning summary."""
+        # Capture before from undo stack (the snapshot taken right before apply)
+        df_before = self._undo_stack[-1] if self._undo_stack else self.original_df
+        df_after = self.df
+        if df_before is not None and df_after is not None:
+            self.audit.record_operation(operation, details, df_before, df_after)
         self.operations.append({
             "operation": operation,
             "details": details,
@@ -110,6 +120,7 @@ class DataStore:
         self._undo_stack.clear()
         self.operations.clear()
         self.source_info = {}
+        self.audit.clear()
         self._notify()
 
     @classmethod

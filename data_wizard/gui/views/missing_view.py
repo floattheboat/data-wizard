@@ -184,7 +184,7 @@ class MissingView(ctk.CTkFrame):
             new_df = apply_strategies_bulk(self._store.df, strategies)
             self._store.df = new_df
 
-            details = {col: cfg["strategy"] for col, cfg in active.items()}
+            details = {col: cfg for col, cfg in active.items()}
             self._store.log_operation("missing_values", details)
 
             self._status_label.configure(

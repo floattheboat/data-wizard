@@ -149,6 +149,9 @@ class ExportView(ctk.CTkFrame):
 
     def _on_export_done(self, path, progress):
         progress.close()
+        fmt = self._fmt_var.get()
+        self._store.audit.record_export(self._store.df, path, fmt)
+        self._save_audit_report(path)
         self._status_label.configure(
             text=f"Exported successfully to:\n{path}",
             text_color=SUCCESS_COLOR,
@@ -187,7 +190,35 @@ class ExportView(ctk.CTkFrame):
 
     def _on_db_export_done(self, table_name, rows, progress):
         progress.close()
+        self._store.audit.record_export(
+            self._store.df, f"database://{table_name}", "database",
+            extra={"table_name": table_name, "rows_written": rows},
+        )
+        self._save_audit_report(table_name)
         self._status_label.configure(
             text=f"Exported {rows:,} rows to table '{table_name}'",
             text_color=SUCCESS_COLOR,
         )
+
+    def _save_audit_report(self, export_path: str):
+        """Auto-save audit report and reproduction script alongside exported file."""
+        import os
+        from data_wizard.core.script_generator import generate_script
+
+        if os.path.isfile(export_path):
+            base, _ = os.path.splitext(export_path)
+        else:
+            base = export_path.replace("://", "_").replace("/", "_")
+        json_path = base + "_audit.json"
+        txt_path = base + "_audit.txt"
+        script_path = base + "_reproduce.py"
+        try:
+            self._store.audit.save_report(json_path)
+            with open(txt_path, "w", encoding="utf-8") as f:
+                f.write(self._store.audit.format_text_report())
+        except Exception:
+            pass  # audit save is best-effort
+        try:
+            generate_script(self._store.audit.events, output_path=script_path)
+        except Exception:
+            pass  # script generation is best-effort
