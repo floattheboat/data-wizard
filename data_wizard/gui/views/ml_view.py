@@ -190,9 +190,12 @@ class MLView(ctk.CTkFrame):
                 row, text=f"{name.upper()}:",
                 font=(FONT_FAMILY, FONT_SIZE_SM, "bold"), anchor="w", width=100,
             ).pack(side="left")
+            value_color = MUTED_TEXT if value == "N/A" else None
+            value_kwargs = {"text_color": value_color} if value_color else {}
             ctk.CTkLabel(
                 row, text=f"{value}",
                 font=(FONT_FAMILY, FONT_SIZE_MD), anchor="w",
+                **value_kwargs,
             ).pack(side="left", padx=5)
 
         # Summary info

@@ -147,10 +147,13 @@ class TestTrainModel:
         assert results["error"] is None
         metrics = results["metrics"]
         assert "accuracy" in metrics
+        assert "balanced_accuracy" in metrics
         assert "precision" in metrics
         assert "recall" in metrics
         assert "f1" in metrics
-        assert all(0 <= v <= 1 for v in metrics.values())
+        assert "log_loss" in metrics
+        numeric_vals = [v for v in metrics.values() if v != "N/A"]
+        assert all(0 <= v <= 100 for v in numeric_vals)
 
     def test_regression_returns_correct_metrics(self, regression_df):
         results = train_model(regression_df, "target", "Linear Regression", "regression")
@@ -159,6 +162,9 @@ class TestTrainModel:
         assert "r2" in metrics
         assert "mae" in metrics
         assert "rmse" in metrics
+        assert "mse" in metrics
+        assert "mape" in metrics
+        assert "max_error" in metrics
 
     def test_tree_models_return_feature_importances(self, classification_df):
         results = train_model(classification_df, "target", "Random Forest", "classification")
@@ -188,3 +194,8 @@ class TestTrainModel:
     def test_all_regression_algorithms_run(self, regression_df, algo_name):
         results = train_model(regression_df, "target", algo_name, "regression")
         assert results["error"] is None, f"{algo_name} failed: {results['error']}"
+
+    def test_log_loss_na_for_svm(self, classification_df):
+        results = train_model(classification_df, "target", "SVM", "classification")
+        assert results["error"] is None
+        assert results["metrics"]["log_loss"] == "N/A"

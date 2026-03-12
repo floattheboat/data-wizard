@@ -148,20 +148,38 @@ def train_model(
 
         # Compute metrics
         if task_type == "classification":
-            from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+            from sklearn.metrics import (
+                accuracy_score, balanced_accuracy_score,
+                precision_score, recall_score, f1_score, log_loss,
+            )
             metrics = {
                 "accuracy": round(accuracy_score(y_test, y_pred), 4),
+                "balanced_accuracy": round(balanced_accuracy_score(y_test, y_pred), 4),
                 "precision": round(precision_score(y_test, y_pred, average="weighted", zero_division=0), 4),
                 "recall": round(recall_score(y_test, y_pred, average="weighted", zero_division=0), 4),
                 "f1": round(f1_score(y_test, y_pred, average="weighted", zero_division=0), 4),
             }
+            try:
+                y_proba = model.predict_proba(X_test)
+                metrics["log_loss"] = round(log_loss(y_test, y_proba), 4)
+            except AttributeError:
+                metrics["log_loss"] = "N/A"
         else:
-            from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+            from sklearn.metrics import (
+                r2_score, mean_absolute_error, mean_squared_error,
+                mean_absolute_percentage_error, max_error,
+            )
             metrics = {
                 "r2": round(r2_score(y_test, y_pred), 4),
                 "mae": round(mean_absolute_error(y_test, y_pred), 4),
                 "rmse": round(np.sqrt(mean_squared_error(y_test, y_pred)), 4),
+                "mse": round(mean_squared_error(y_test, y_pred), 4),
+                "max_error": round(max_error(y_test, y_pred), 4),
             }
+            try:
+                metrics["mape"] = round(mean_absolute_percentage_error(y_test, y_pred), 4)
+            except Exception:
+                metrics["mape"] = "N/A"
 
         # Feature importances
         feature_importances = None
