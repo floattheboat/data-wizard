@@ -15,6 +15,7 @@ from data_wizard.gui.views.explore_view import ExploreView
 from data_wizard.gui.views.missing_view import MissingView
 from data_wizard.gui.views.outlier_view import OutlierView
 from data_wizard.gui.views.export_view import ExportView
+from data_wizard.gui.views.ml_view import MLView
 
 
 class MainWindow(ctk.CTk):
@@ -99,7 +100,8 @@ class MainWindow(ctk.CTk):
             "explore": ExploreView(self._content, on_proceed=lambda: self._advance_to(2)),
             "missing": MissingView(self._content, on_proceed=lambda: self._advance_to(3)),
             "outlier": OutlierView(self._content, on_proceed=lambda: self._advance_to(4)),
-            "export": ExportView(self._content),
+            "export": ExportView(self._content, on_proceed=lambda: self._advance_to(5)),
+            "ml": MLView(self._content),
         }
 
         # Register data change callback for status bar updates

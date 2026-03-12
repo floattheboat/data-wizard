@@ -21,8 +21,9 @@ from data_wizard.gui.dialogs.progress_dialog import ProgressDialog
 class ExportView(ctk.CTkFrame):
     """View for exporting cleaned data to file or database."""
 
-    def __init__(self, master, **kwargs):
+    def __init__(self, master, on_proceed=None, **kwargs):
         super().__init__(master, **kwargs)
+        self._on_proceed = on_proceed
         self._store = DataStore()
         self._db_engine = None
 
@@ -95,6 +96,18 @@ class ExportView(ctk.CTkFrame):
             command=self._export_to_db,
         )
         self._btn_db_export.pack(side="left", padx=5)
+
+        # Proceed to ML button
+        btn_frame = ctk.CTkFrame(self, fg_color="transparent")
+        btn_frame.pack(fill="x", padx=20, pady=(10, 0))
+
+        self._btn_proceed = ctk.CTkButton(
+            btn_frame, text="Proceed to Machine Learning  →", height=38,
+            font=(FONT_FAMILY, FONT_SIZE_MD, "bold"),
+            fg_color=SUCCESS_COLOR,
+            command=self._proceed,
+        )
+        self._btn_proceed.pack(side="right")
 
         # Status
         self._status_label = ctk.CTkLabel(
@@ -222,3 +235,7 @@ class ExportView(ctk.CTkFrame):
             generate_script(self._store.audit.events, output_path=script_path)
         except Exception:
             pass  # script generation is best-effort
+
+    def _proceed(self):
+        if self._on_proceed:
+            self._on_proceed()

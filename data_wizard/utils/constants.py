@@ -43,6 +43,7 @@ STEPS = [
     {"key": "missing", "label": "3. Missing Values",   "icon": "🩹"},
     {"key": "outlier", "label": "4. Outliers",         "icon": "📊"},
     {"key": "export",  "label": "5. Export",           "icon": "💾"},
+    {"key": "ml",      "label": "6. Machine Learning", "icon": "🤖"},
 ]
 
 # Outlier detection defaults
