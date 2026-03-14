@@ -1,0 +1,272 @@
+/* Data Wizard Shiny - Dark Theme CSS */
+
+/* Sidebar styling */
+.bslib-sidebar-layout > .sidebar {
+  background-color: #1F2937 !important;
+  border-right: 1px solid #374151;
+}
+
+/* Step buttons */
+.step-btn {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 4px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #9CA3AF;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.step-btn:hover:not(.step-disabled) {
+  background-color: #374151;
+  color: #E5E7EB;
+}
+
+.step-btn.step-active {
+  background-color: #3B82F6;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.step-btn.step-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.step-btn .step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #4B5563;
+  color: #D1D5DB;
+  font-size: 12px;
+  font-weight: 700;
+  margin-right: 10px;
+}
+
+.step-btn.step-active .step-number {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+}
+
+.step-btn.step-completed .step-number {
+  background-color: #22C55E;
+  color: #FFFFFF;
+}
+
+/* Card styling */
+.card {
+  background-color: #1F2937 !important;
+  border: 1px solid #374151 !important;
+  border-radius: 8px;
+}
+
+.card-header {
+  background-color: #111827 !important;
+  border-bottom: 1px solid #374151 !important;
+  color: #E5E7EB;
+  font-weight: 600;
+}
+
+.card-body {
+  color: #D1D5DB;
+}
+
+/* Value boxes */
+.bslib-value-box {
+  border-radius: 8px !important;
+  border: none !important;
+}
+
+/* Form controls dark styling */
+.form-control, .form-select {
+  background-color: #374151 !important;
+  border-color: #4B5563 !important;
+  color: #E5E7EB !important;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #3B82F6 !important;
+  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25) !important;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: #3B82F6 !important;
+  border-color: #3B82F6 !important;
+}
+
+.btn-primary:hover {
+  background-color: #2563EB !important;
+  border-color: #2563EB !important;
+}
+
+.btn-outline-primary {
+  color: #3B82F6 !important;
+  border-color: #3B82F6 !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: #3B82F6 !important;
+  color: #FFFFFF !important;
+}
+
+.btn-success {
+  background-color: #22C55E !important;
+  border-color: #22C55E !important;
+}
+
+.btn-outline-warning {
+  color: #F59E0B !important;
+  border-color: #F59E0B !important;
+}
+
+.btn-outline-warning:hover {
+  background-color: #F59E0B !important;
+  color: #1F2937 !important;
+}
+
+/* DT tables */
+.dataTables_wrapper {
+  color: #D1D5DB !important;
+}
+
+table.dataTable {
+  color: #D1D5DB !important;
+  border-color: #374151 !important;
+}
+
+table.dataTable thead th {
+  background-color: #111827 !important;
+  color: #E5E7EB !important;
+  border-bottom: 2px solid #3B82F6 !important;
+}
+
+table.dataTable tbody tr {
+  background-color: #1F2937 !important;
+}
+
+table.dataTable tbody tr:hover {
+  background-color: #374151 !important;
+}
+
+table.dataTable tbody td {
+  border-color: #374151 !important;
+}
+
+.dataTables_info, .dataTables_length, .dataTables_filter {
+  color: #9CA3AF !important;
+}
+
+.dataTables_paginate .paginate_button {
+  color: #D1D5DB !important;
+}
+
+.dataTables_paginate .paginate_button.current {
+  background: #3B82F6 !important;
+  border-color: #3B82F6 !important;
+  color: #FFFFFF !important;
+}
+
+/* Status bar */
+.status-bar {
+  background-color: #111827;
+  border-top: 1px solid #374151;
+  padding: 6px 16px;
+  font-size: 12px;
+  color: #9CA3AF;
+  display: flex;
+  justify-content: space-between;
+}
+
+.status-bar .status-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Alert overrides */
+.alert-success {
+  background-color: rgba(34, 197, 94, 0.15) !important;
+  border-color: #22C55E !important;
+  color: #22C55E !important;
+}
+
+.alert-danger {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  border-color: #EF4444 !important;
+  color: #EF4444 !important;
+}
+
+/* Modal dark theme */
+.modal-content {
+  background-color: #1F2937 !important;
+  color: #D1D5DB !important;
+  border: 1px solid #374151 !important;
+}
+
+.modal-header {
+  border-bottom-color: #374151 !important;
+}
+
+.modal-footer {
+  border-top-color: #374151 !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1F2937;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4B5563;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6B7280;
+}
+
+/* Badge */
+.badge {
+  font-weight: 500;
+}
+
+/* Slider */
+.irs--shiny .irs-bar {
+  background: #3B82F6 !important;
+  border-color: #3B82F6 !important;
+}
+
+.irs--shiny .irs-handle {
+  border-color: #3B82F6 !important;
+}
+
+/* Body background */
+body {
+  background-color: #111827 !important;
+}
+
+/* Sidebar title */
+.sidebar-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFFFFF;
+  padding: 16px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #374151;
+}
