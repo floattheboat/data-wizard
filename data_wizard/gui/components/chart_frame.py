@@ -18,21 +18,21 @@ class ChartFrame(ctk.CTkFrame):
         super().__init__(master, **kwargs)
         self._figsize = figsize
         self._figure: Optional[Figure] = None
-        self._canvas: Optional[FigureCanvasTkAgg] = None
+        self._mpl_canvas: Optional[FigureCanvasTkAgg] = None
         self._create_figure()
 
     def _create_figure(self):
-        if self._canvas:
-            self._canvas.get_tk_widget().destroy()
+        if self._mpl_canvas:
+            self._mpl_canvas.get_tk_widget().destroy()
 
         self._figure = Figure(figsize=self._figsize, dpi=100)
         self._figure.patch.set_alpha(0)
-        self._canvas = FigureCanvasTkAgg(self._figure, master=self)
-        self._canvas.get_tk_widget().pack(fill="both", expand=True)
+        self._mpl_canvas = FigureCanvasTkAgg(self._figure, master=self)
+        self._mpl_canvas.get_tk_widget().pack(fill="both", expand=True)
 
     def clear(self):
         self._figure.clear()
-        self._canvas.draw()
+        self._mpl_canvas.draw()
 
     @property
     def figure(self) -> Figure:
@@ -40,7 +40,7 @@ class ChartFrame(ctk.CTkFrame):
 
     def draw(self):
         self._figure.tight_layout()
-        self._canvas.draw()
+        self._mpl_canvas.draw()
 
     def plot_histogram(self, data: pd.Series, title: str = "", bins: int = 30):
         """Plot a histogram of numeric data."""
